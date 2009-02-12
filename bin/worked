@@ -7,4 +7,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/worked")
 
 require "worked/cli"
 
-Worked::CLI.execute(STDOUT, ARGV)
+CONFIG = File.join(Dir.getwd, ".worked")
+
+Worked::CLI.execute(STDOUT, ARGV, CONFIG)

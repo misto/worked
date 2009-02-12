@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 class TestWorked < Test::Unit::TestCase
 
+  include WorkedTestHelper
+
   def test_hours_and_activity
     assert_record 5.hours,              "coding",             "5 hours on coding"
     assert_record 5.hours,              "coding and writing", "4 to 9 on coding and writing"
@@ -21,11 +23,6 @@ class TestWorked < Test::Unit::TestCase
 
     Worked.new(log).record(source)
 
-    s_from, s_to, activity = /(\S*) (\S*) (\S*)/.match(log).captures
-
-    from = DateTime.parse(s_from)
-    to   = DateTime.parse(s_to)
-
-    [ ((to - from) * 24).hours, activity ]
+    extract_tuple(log)
   end
 end

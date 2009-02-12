@@ -2,7 +2,7 @@ require 'optparse'
 
 module Worked
   class CLI
-    def self.execute(stdout, arguments=[])
+    def self.execute(stdout, arguments=[], file)
 
       # NOTE: the option -p/--path= is given as an example, and should be replaced in your application.
 
