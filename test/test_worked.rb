@@ -11,6 +11,10 @@ class TestWorked < Test::Unit::TestCase
     assert_record 5.hours +  5.minutes, "coding",             "5 hours 5 minutes on coding"
   end
 
+  def test_minutes_and_activity
+    assert_record 5.minutes,              "coding",             "5 minutes on coding"
+  end
+
   def assert_record exp_duration, exp_activity, source
     hours, activity = record_and_extract(source)
 
