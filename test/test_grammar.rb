@@ -28,6 +28,8 @@ class TestGrammar < Test::Unit::TestCase
     assert_equal  4.hours, range("1pm to 5pm")
     assert_equal  4.hours, range("1 pm to 5 pm")
     assert_equal 12.hours, range("1 am to 5 pm")
+    assert_equal  2.hours, range("11 to 1")
+    assert_equal  2.hours, range("11pm to 1am")
   end
 
   def test_hour_minute_ranges
