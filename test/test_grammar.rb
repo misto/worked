@@ -42,6 +42,10 @@ class TestGrammar < Test::Unit::TestCase
     assert_equal "Testing and Refactoring", activity("1 to 5 on Testing and Refactoring")
   end
 
+  def test_from_time
+    assert_in_delta 2.hours, range("from #{DateTime.now.hour - 2}"), 10 #seconds of delta
+  end
+
   def activity source
     parse(source).activity
   end
