@@ -1,0 +1,47 @@
+
+grammar InputGrammar
+
+  rule root
+    time " on " activity
+  end
+
+  rule activity
+    .* {
+      def to_s
+        text_value
+      end
+    }
+  end
+
+  rule time
+    time_in_words / time_in_digits
+  end
+
+  rule time_in_words
+    hours " "? minutes? {
+        def total
+	  hours.to_i.hours + minutes.to_i.minutes
+        end
+    }
+  end
+
+  rule time_in_digits
+    integer m:( ":" integer )? {
+        def total
+	  integer.to_i.hours + m.to_i.minutes
+        end
+    }
+  end
+
+  rule hours
+    integer " "? ( "hours" / "h" )
+  end
+
+  rule minutes
+    integer " "? ( "minutes" / "m" )
+  end
+
+  rule integer
+    [1-9] [0-9]*
+  end
+end
