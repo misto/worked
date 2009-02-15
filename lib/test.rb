@@ -1,8 +1,9 @@
 require 'worked/inputparser'
 
-n = InputGrammarParser.new.parse("1:10 on coding")
+n = InputParser.new.parse("from #{DateTime.now.hour - 2} on coding")
 
 p n
+p ((n.end - n.start) * 24).hours
 
-p n.time.total
-p n.activity.to_s
+#p n.time.from
+#p n.time.to

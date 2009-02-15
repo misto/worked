@@ -14,31 +14,70 @@ grammar InputGrammar
   end
 
   rule time
-    time_in_words / time_in_digits
+    time_from / time_in_words / time_range / time_in_digits
+  end
+
+  rule time_from
+    "from " f:time_in_digits fpm:am_pm? {
+      def from
+
+	if methods.include?("fpm") && fpm.text_value =~ /pm/
+	  return f.total + 12.hours
+	end
+
+        f.total
+      end
+    }
+  end
+
+  rule time_range
+    f:time_in_digits fpm:am_pm? " to " t:time_in_digits tpm:am_pm? {
+      def from
+
+	if methods.include?("fpm") && fpm.text_value =~ /pm/
+	  return f.total + 12.hours
+	end
+
+        f.total
+      end
+
+      def to
+
+	if methods.include?("tpm") && tpm.text_value =~ /pm/
+	  return t.total + 12.hours
+	end
+
+        t.total
+      end
+    }
+  end
+
+  rule am_pm
+    " am" / " pm" /  "am" / "pm"
   end
 
   rule time_in_words
-    hours " "? minutes? {
-        def total
-	  hours.to_i.hours + minutes.to_i.minutes
-        end
+    hours m:(" "? minutes)? {
+      def total
+	  hours.to_i.hours + m.minutes.to_i.minutes
+      end
     }
   end
 
   rule time_in_digits
     integer m:( ":" integer )? {
-        def total
+      def total
 	  integer.to_i.hours + m.to_i.minutes
-        end
+      end
     }
   end
 
   rule hours
-    integer " "? ( "hours" / "h" )
+    integer " "? ( "hours" / "hour" / "h" )
   end
 
   rule minutes
-    integer " "? ( "minutes" / "m" )
+    integer " "? ( "minutes" / "minute" / "m" )
   end
 
   rule integer
