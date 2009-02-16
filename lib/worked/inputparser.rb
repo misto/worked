@@ -36,7 +36,7 @@ end
 
 class InputParser
 
-  def parse source
+  def self.parse source
     root = InputGrammarParser.new.parse(source)
 
     from, to = root.time.from, root.time.to

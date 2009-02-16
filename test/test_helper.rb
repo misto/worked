@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/../lib/worked'
 module WorkedTestHelper
   def extract_tuple log
 
-    s_from, s_to, activity = /(\S*) (\S*) (\S*)/.match(log).captures
+    s_from, s_to, activity = /(\S*)\s+(\S*)\s+(.*)/.match(log).captures
 
     from = DateTime.parse(s_from)
     to   = DateTime.parse(s_to)

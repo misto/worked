@@ -4,39 +4,33 @@ module Worked
   class CLI
     def self.execute(stdout, arguments, file)
 
-      # NOTE: the option -p/--path= is given as an example, and should be replaced in your application.
+      Recorder.new(file).record(arguments)
 
-      options = {
-        :path     => '~'
-      }
-      mandatory_options = %w(  )
+      #options = {
+      #  :path     => '~'
+      #}
 
-      parser = OptionParser.new do |opts|
-        opts.banner = <<-BANNER.gsub(/^          /,'')
-          This application is wonderful because...
+      #parser = OptionParser.new do |opts|
+      #  opts.banner = <<-BANNER.gsub(/^          /,'')
+      #    This application is wonderful because...
 
-          Usage: #{File.basename($0)} [options]
+      #    Usage: #{File.basename($0)} [options]
 
-          Options are:
-        BANNER
-        opts.separator ""
-        opts.on("-p", "--path=PATH", String,
-                "This is a sample message.",
-                "For multiple lines, add more strings.",
-                "Default: ~") { |arg| options[:path] = arg }
-        opts.on("-h", "--help",
-                "Show this help message.") { stdout.puts opts; exit }
-        opts.parse!(arguments)
+      #    Options are:
+      #  BANNER
+      #  opts.separator ""
+      #  opts.on("-p", "--path=PATH", String,
+      #          "This is a sample message.",
+      #          "For multiple lines, add more strings.",
+      #          "Default: ~") { |arg| options[:path] = arg }
+      #  opts.on("-h", "--help",
+      #          "Show this help message.") { stdout.puts opts; exit }
 
-        if mandatory_options && mandatory_options.find { |option| options[option.to_sym].nil? }
-          stdout.puts opts; exit
-        end
-      end
+      #  opts.parse!(arguments)
+      #end
 
-      path = options[:path]
+      #path = options[:path]
 
-      # do stuff
-      stdout.puts "To update this executable, look in lib/worked/cli.rb"      
     end
   end
 end

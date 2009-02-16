@@ -57,9 +57,9 @@ grammar InputGrammar
   end
 
   rule time_in_words
-    hours m:(" "? minutes)? {
+    minutes / hours m:(" "? minutes)? {
       def total
-	  hours.to_i.hours + m.minutes.to_i.minutes
+	  minutes.to_i.minutes + hours.to_i.hours + m.minutes.to_i.minutes
       end
     }
   end
@@ -77,10 +77,14 @@ grammar InputGrammar
   end
 
   rule minutes
-    integer " "? ( "minutes" / "minute" / "m" )
+    integer " "? ( "minutes" / "minute" / "m" ) {
+      def total
+        integer.to_i.minutes
+      end
+    }
   end
 
   rule integer
-    [1-9] [0-9]*
+    [0-9]*
   end
 end

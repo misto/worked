@@ -1,5 +1,7 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
+require 'worked/recorder'
+
 class TestWorked < Test::Unit::TestCase
 
   include WorkedTestHelper
@@ -19,7 +21,7 @@ class TestWorked < Test::Unit::TestCase
   end
 
   def assert_record exp_duration, exp_activity, source
-    hours, activity = record_and_extract(source)
+    hours, activity = record_and_extract_duration(source)
 
     assert_equal exp_duration, hours
     assert_equal exp_activity, activity
@@ -28,7 +30,7 @@ class TestWorked < Test::Unit::TestCase
   def record_and_extract_duration source
     log = ""
 
-    Worked.new(log).record(source)
+    Recorder.new(log).record(source)
 
     extract_tuple(log)
   end

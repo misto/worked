@@ -10,6 +10,7 @@ class TestWorkedCli < Test::Unit::TestCase
 
   def setup
     @file = Tempfile.new("worked")
+    @filename = @file.path
     reset_stdout
   end
 
@@ -19,7 +20,7 @@ class TestWorkedCli < Test::Unit::TestCase
 
   def run_with argument
     Worked::CLI.execute(@stdout_io, argument, @file)
-    @stdout = @stdout_io.read
+    @file.flush
   end
 
   def extract file
@@ -29,10 +30,11 @@ class TestWorkedCli < Test::Unit::TestCase
   end
 
   def test_with_new_file
+    @file.open
     run_with "5 hours on coding"
     run_with "16:05 to 18:20 on documentation and refactoring"
 
-    first, second = extract(@file)
+    first, second = extract(@filename)
 
     assert 5.hours,                         first[0]
     assert 2.hours + 15.minutes,            second[0]
@@ -40,17 +42,18 @@ class TestWorkedCli < Test::Unit::TestCase
     assert "coding",                        first[1]
     assert "documentation and refactoring", second[1]
 
-    assert_equal "Creating new file: \.worked\n", @stdout
+    assert_equal "", @stdout_io.read
 
     reset_stdout
 
     run_with "1 hour on refactoring"
+    @file.close
 
-    _, _, third = extract(@file)
+    _, _, third = extract(@filename)
 
     assert 1.hours,       third[0]
     assert "refactoring", third[1]
 
-    assert_equal "", @stdout
+    assert_equal "", @stdout_io.read
   end
 end

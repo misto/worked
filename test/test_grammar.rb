@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 class TestGrammar < Test::Unit::TestCase
 
-  def setup
-    @parser = InputParser.new
-  end
-
   def test_hours
     assert_equal 5, hours("5 hours")
     assert_equal 5, hours("5hours")
@@ -66,7 +62,7 @@ class TestGrammar < Test::Unit::TestCase
   end
 
   def parse source
-    @parser.parse(source)
+    InputParser.parse(source)
   end
 
 end

@@ -1,6 +1,6 @@
 require 'worked/inputparser'
 
-n = InputParser.new.parse("from #{DateTime.now.hour - 2} on coding")
+n = InputParser.parse("5 minutes on coding")
 
 p n
 p ((n.end - n.start) * 24).hours
