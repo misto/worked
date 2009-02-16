@@ -1,4 +1,5 @@
 require 'optparse'
+require 'worked/recorder'
 
 module Worked
   class CLI
