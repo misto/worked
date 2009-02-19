@@ -1,11 +1,10 @@
 History.txt
+License.txt
 Manifest.txt
-PostInstall.txt
 README.rdoc
 Rakefile
 bin/worked
 config/website.yml.sample
-lib/test.rb
 lib/worked.rb
 lib/worked/cli.rb
 lib/worked/inputgrammar.treetop
@@ -15,12 +14,12 @@ script/console
 script/destroy
 script/generate
 script/txt2html
+tasks/website.rake
 test/test_grammar.rb
 test/test_helper.rb
 test/test_worked.rb
 test/test_worked_cli.rb
 website/index.html
-website/index.txt
 website/javascripts/rounded_corners_lite.inc.js
 website/stylesheets/screen.css
 website/template.html.erb
