@@ -1,4 +1,6 @@
-= Worked – Time Recording
+= Worked
+
+The easiest time recording application imagineable.
 
 * http://worked.rubyforge.org/
 

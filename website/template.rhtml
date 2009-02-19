@@ -31,16 +31,15 @@
 <div id="main">
 
     <h1><%= title %></h1>
-    <div class="sidebar">
-      <div id="version" class="clickable" onclick='document.location = "<%= download %>"; return false'>
-        <p>Get Version</p>
-        <a href="<%= download %>" class="numbers"><%= version %></a>
-      </div>
+    <div id="version" class="clickable" onclick='document.location = "<%= download %>"; return false'>
+      <p>Get Version</p>
+      <a href="<%= download %>" class="numbers"><%= version %></a>
     </div>
     <%= body %>
     <p class="coda">
-      <a href="FIXME email">FIXME full name</a>, <%= modified.pretty %><br>
-      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
+      <a href="me@misto.ch">Mirko Stocker</a>, <%= modified.pretty %><br>
+      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>,
+      by Daniel Cadenas via <a href="http://depgraph.rubyforge.org/">DepGraph</a>
     </p>
 </div>
 

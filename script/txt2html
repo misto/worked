@@ -1,17 +1,20 @@
 #!/usr/bin/env ruby
 
-load File.dirname(__FILE__) + "/../Rakefile"
-require 'rubyforge'
+require 'rubygems'
+begin
+  require 'newgem'
+rescue LoadError
+  puts "\n\nGenerating the website requires the newgem RubyGem"
+  puts "Install: gem install newgem\n\n"
+  exit(1)
+end
 require 'redcloth'
 require 'syntax/convertors/html'
 require 'erb'
+require File.dirname(__FILE__) + '/../lib/worked.rb'
 
-download = "http://rubyforge.org/projects/#{$hoe.rubyforge_name}"
-version  = $hoe.version
-
-def rubyforge_project_id
-  RubyForge.new.configure.autoconfig["group_ids"][$hoe.rubyforge_name]
-end
+version  = Worked::VERSION
+download = 'http://rubyforge.org/projects/imap-feeder'
 
 class Fixnum
   def ordinal
@@ -39,9 +42,10 @@ end
 
 if ARGV.length >= 1
   src, template = ARGV
-  template ||= File.join(File.dirname(__FILE__), '/../website/template.html.erb')
+  template ||= File.join(File.dirname(__FILE__), '/../website/template.rhtml')
+  
 else
-  puts("Usage: #{File.split($0).last} source.txt [template.html.erb] > output.html")
+  puts("Usage: #{File.split($0).last} source.txt [template.rhtml] > output.html")
   exit!
 end
 
@@ -50,9 +54,8 @@ template = ERB.new(File.open(template).read)
 title = nil
 body = nil
 File.open(src) do |fsrc|
-  title_text = fsrc.readline
-  body_text_template = fsrc.read
-  body_text = ERB.new(body_text_template).result(binding)
+  title_text = fsrc.readline.gsub(/^=/, "")
+  body_text = fsrc.read
   syntax_items = []
   body_text.gsub!(%r!<(pre|code)[^>]*?syntax=['"]([^'"]+)[^>]*>(.*?)</\1>!m){
     ident = syntax_items.length
@@ -60,6 +63,9 @@ File.open(src) do |fsrc|
     syntax_items << "<#{element} class='syntax'>#{convert_syntax(syntax, source)}</#{element}>"
     "syntax-temp-#{ident}"
   }
+  body_text.gsub!(/^===/, "h3.")
+  body_text.gsub!(/^==/, "h2.")
+  body_text.gsub!(/^- /, "* ")
   title = RedCloth.new(title_text).to_html.gsub(%r!<.*?>!,'').strip
   body = RedCloth.new(body_text).to_html
   body.gsub!(%r!(?:<pre><code>)?syntax-temp-(\d+)(?:</code></pre>)?!){ syntax_items[$1.to_i] }

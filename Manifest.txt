@@ -4,7 +4,7 @@ Manifest.txt
 README.rdoc
 Rakefile
 bin/worked
-config/website.yml.sample
+config/website.yml
 lib/worked.rb
 lib/worked/cli.rb
 lib/worked/inputgrammar.treetop
@@ -22,4 +22,4 @@ test/test_worked_cli.rb
 website/index.html
 website/javascripts/rounded_corners_lite.inc.js
 website/stylesheets/screen.css
-website/template.html.erb
+website/template.rhtml
