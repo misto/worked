@@ -14,7 +14,7 @@ require 'erb'
 require File.dirname(__FILE__) + '/../lib/worked.rb'
 
 version  = Worked::VERSION
-download = 'http://rubyforge.org/projects/imap-feeder'
+download = 'http://rubyforge.org/projects/worked'
 
 class Fixnum
   def ordinal

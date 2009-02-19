@@ -19,7 +19,6 @@ test/test_grammar.rb
 test/test_helper.rb
 test/test_worked.rb
 test/test_worked_cli.rb
-website/index.html
 website/javascripts/rounded_corners_lite.inc.js
 website/stylesheets/screen.css
 website/template.rhtml
