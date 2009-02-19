@@ -4,16 +4,16 @@ require File.dirname(__FILE__) + '/lib/worked'
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 $hoe = Hoe.new('worked', Worked::VERSION) do |p|
-  p.developer('FIXME full name', 'FIXME email')
+  p.developer('Mirko Stocker', 'me@misto.ch')
   p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
-  p.rubyforge_name       = p.name # TODO this is default value
+  p.rubyforge_name       = p.name
   p.extra_deps         = [
     ['treetop','>= 1.2.4'],
   ]
   p.extra_dev_deps = [
     ['newgem', ">= #{::Newgem::VERSION}"]
   ]
-  
+
   p.clean_globs |= %w[**/.DS_Store tmp *.log]
   path = (p.rubyforge_name == p.name) ? p.rubyforge_name : "\#{p.rubyforge_name}/\#{p.name}"
   p.remote_rdoc_dir = File.join(path.gsub(/^#{p.rubyforge_name}\/?/,''), 'rdoc')
