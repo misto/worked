@@ -23,9 +23,38 @@ Right now, the times are just recorded, no report generation yet.
 == SYNOPSIS:
 
 The syntax is quite flexible, and if you'd like to have it extended, just drop
-me an email. The following formats are accepted:
+me an email. The input consists of: <time> on <activity>. So for example, you
+can write '5 hours on documentation'. The following formats for the <time> part
+are recognized:
 
-*
+* 5 hours
+* 5h
+* or simply '5'
+
+Minutes can be added or standing alone as well:
+
+* 5 h 10 minutes
+* 5 hours 10 m
+* or simply '5:10'
+
+Stored is not the absolute time, but the point <time> hours ago and the current
+date.
+
+Of course you can also specify both start- and end time of an activity with the
+following syntax:
+
+* 13 to 17
+* 1 pm to 5 pm
+* 13:30 to 17:40
+
+If you just want to record an activity from a certain point upto now, you can
+write:
+
+* from 5pm
+* from 11:30
+
+Specifying dates is not supported right now, but you can of course edit the file
+directly if necessary.
 
 == STORY:
 
