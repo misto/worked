@@ -6,21 +6,41 @@ The easiest time recording application imagineable.
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Worked is really the simplest time recording (or tracking, whatever term you
+prefer) application that does all you need and nothing more (only `date >> file` is easier).
+
+It simply takes a time or a time range and an activity and appends it to a
+hidden file in the current directory. The use case is, that you have '.worked'
+files in the root directories of your projects, and before you finish your
+current work period, you probably commit something and you also record your time.
+
+Right now, the times are just recorded, no report generation yet.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Appends a time range and an activity to a file.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+The syntax is quite flexible, and if you'd like to have it extended, just drop
+me an email. The following formats are accepted:
+
+*
+
+== STORY:
+
+The week before my new semester started, I promised to myself to do better (or,
+to do it at all) time recording to get a better feeling for how much I actually
+worked. I used to write my time into a wiki, but that was still too tedious to
+do so I often neglected it and had to record it from memory some days later. So I
+needed a tool and a few hours later, 'worked' was born.
 
 == REQUIREMENTS:
 
-* Uses the great Treetop for the input parser.
+* Uses the really great Treetop for the input parser.
 
 == INSTALL:
 
 * sudo gem install worked
 
+== TODO:
