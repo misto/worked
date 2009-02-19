@@ -7,7 +7,7 @@ class Recorder
   end
 
   def record line
-    res =  InputParser.parse(line)
-    @out << "#{res.start}\t#{res.end}\t#{res.activity}\n"
+    from, to, activity = InputParser.parse(line)
+    @out << "#{ from }\t#{ to }\t#{ activity }\n"
   end
 end

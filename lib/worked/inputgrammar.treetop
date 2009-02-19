@@ -6,11 +6,7 @@ grammar InputGrammar
   end
 
   rule activity
-    .* {
-      def to_s
-        text_value
-      end
-    }
+    .*
   end
 
   rule time
@@ -18,48 +14,42 @@ grammar InputGrammar
   end
 
   rule time_from
-    "from " f:time_in_digits fpm:am_pm? {
+    "from " am_pm_time {
       def from
-
-	if methods.include?("fpm") && fpm.text_value =~ /pm/
-	  return f.total + 12.hours
-	end
-
-        f.total
+        am_pm_time.to_24h
       end
     }
   end
 
   rule time_range
-    f:time_in_digits fpm:am_pm? " to " t:time_in_digits tpm:am_pm? {
+    f:am_pm_time " to " t:am_pm_time {
       def from
-
-	if methods.include?("fpm") && fpm.text_value =~ /pm/
-	  return f.total + 12.hours
-	end
-
-        f.total
+        f.to_24h
       end
 
       def to
-
-	if methods.include?("tpm") && tpm.text_value =~ /pm/
-	  return t.total + 12.hours
-	end
-
-        t.total
+        t.to_24h
       end
     }
   end
 
-  rule am_pm
-    " am" / " pm" /  "am" / "pm"
+  rule am_pm_time
+    time_in_digits am_pm:(" am" / " pm" /  "am" / "pm")? {
+      def to_24h
+
+        if methods.include?("am_pm") && am_pm.text_value =~ /pm/
+          return time_in_digits.total + 12.hours
+        end
+
+        time_in_digits.total
+      end
+    }
   end
 
   rule time_in_words
     minutes / hours m:(" "? minutes)? {
       def total
-	  minutes.to_i.minutes + hours.to_i.hours + m.minutes.to_i.minutes
+	  minutes.to_i.minutes + hours.to_i.hours + m.to_i.minutes
       end
     }
   end
@@ -73,11 +63,11 @@ grammar InputGrammar
   end
 
   rule hours
-    integer " "? ( "hours" / "hour" / "h" )
+    integer " "? ( "hour" "s"? / "h" )
   end
 
   rule minutes
-    integer " "? ( "minutes" / "minute" / "m" ) {
+    integer " "? ( "minute" "s"? / "m" ) {
       def total
         integer.to_i.minutes
       end

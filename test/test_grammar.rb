@@ -43,22 +43,22 @@ class TestGrammar < Test::Unit::TestCase
   end
 
   def activity source
-    parse(source).activity
+    parse(source).last
   end
 
   def range source
     res = parse("#{source} on X")
-    ((res.end - res.start) * 24).hours
+    ((res[1] - res[0]) * 24).hours
   end
 
   def hours source
     res = parse("#{source} on X")
-    res.end.hour - res.start.hour
+    res[1].hour - res[0].hour
   end
 
   def minutes source
     res = parse("#{source} on X")
-    res.end.min - res.start.min
+    res[1].min - res[0].min
   end
 
   def parse source

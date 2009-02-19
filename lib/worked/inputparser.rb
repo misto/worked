@@ -4,8 +4,8 @@ require 'worked/inputgrammar'
 
 class Treetop::Runtime::SyntaxNode
 
-  attr_reader :minutes
-
+  # Remove all clutter ('hour', ':', etc) from the
+  # time and turn into an integer
   def to_i
     text_value.gsub(/\D/, '').to_i
   end
@@ -21,17 +21,12 @@ class Treetop::Runtime::SyntaxNode
   def time_to_seconds_from_day t
     t.hour.hours + t.min.minutes
   end
-end
 
-class ParseResult
-  attr_reader :start, :end, :activity
-
-  def initialize t_start, t_end, activity
-    @start = t_start
-    @end = t_end
-    @activity = activity
+  # Default value so we don't have to care whether
+  # there really is a minute component
+  def minutes
+    0
   end
-
 end
 
 class InputParser
@@ -49,7 +44,7 @@ class InputParser
     now      = DateTime.now
     midnight = DateTime.new(now.year, now.month, now.day)
 
-    ParseResult.new(midnight + from.seconds, midnight + to.seconds, root.activity.to_s)
+    [midnight + from.seconds, midnight + to.seconds, root.activity.text_value]
   end
 end
 
