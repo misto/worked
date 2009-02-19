@@ -16,15 +16,15 @@ current work period, you probably commit something and you also record your time
 
 Right now, the times are just recorded, no report generation yet.
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
 * Appends a time range and an activity to a file.
 
 == SYNOPSIS:
 
 The syntax is quite flexible, and if you'd like to have it extended, just drop
-me an email. The input consists of: <time> on <activity>. So for example, you
-can write '5 hours on documentation'. The following formats for the <time> part
+me an email. The input consists of: &lt;time&gt; on &lt;activity&gt;. So for example, you
+can write '5 hours on documentation'. The following formats for the &lt;time&gt; part
 are recognized:
 
 * 5 hours
@@ -35,10 +35,11 @@ Minutes can be added or standing alone as well:
 
 * 5 h 10 minutes
 * 5 hours 10 m
+* 30 minutes
 * or simply '5:10'
 
-Stored is not the absolute time, but the point <time> hours ago and the current
-date.
+Stored is not the absolute time, but the point &lt;time&gt; hours ago and the current
+time.
 
 Of course you can also specify both start- and end time of an activity with the
 following syntax:
@@ -73,3 +74,6 @@ needed a tool and a few hours later, 'worked' was born.
 * sudo gem install worked
 
 == TODO:
+
+* Simple report generation.
+* Investigate if it can be used together with git (e.g. with hooks), so I can, for example, use the last line in a commit message to make my 'worked' statement.
