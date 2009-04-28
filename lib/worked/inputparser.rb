@@ -3,22 +3,12 @@ require 'worked/inputgrammar'
 
 class Treetop::Runtime::SyntaxNode
 
+  attr_reader :from, :to, :total
+
   # Remove all clutter ('hour', ':', etc) from the
   # time and turn into an integer
   def to_i
     text_value.gsub(/\D/, '').to_i
-  end
-
-  def from
-    time_to_seconds_from_day(DateTime.now - total)
-  end
-
-  def to
-    time_to_seconds_from_day(DateTime.now)
-  end
-
-  def time_to_seconds_from_day t
-    t.hour.hours + t.min.minutes
   end
 
   # Default value so we don't have to care whether
@@ -30,20 +20,31 @@ end
 
 class InputParser
 
-  def self.parse source
+  def self.parse(source, now = DateTime.now)
 
-    root = InputGrammarParser.new.parse(source)
+    from, to, total, activity = parse_input source
 
-    from, to = root.time.from, root.time.to
+    from ||= time_in_seconds_from_day(now - total)
+    to   ||= time_in_seconds_from_day(now)
 
     if from > to
       from -= 24.hours
     end
 
-    now      = DateTime.now
     midnight = DateTime.new(now.year, now.month, now.day)
 
-    [midnight + from.seconds, midnight + to.seconds, root.activity.text_value]
+    [midnight + from.seconds, midnight + to.seconds, activity]
+  end
+
+  private
+
+  def self.parse_input source
+    root = InputGrammarParser.new.parse(source)
+    [root.time.from, root.time.to, root.time.total, root.activity.text_value]
+  end
+
+  def self.time_in_seconds_from_day t
+    t.hour.hours + t.min.minutes
   end
 end
 
