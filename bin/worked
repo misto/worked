@@ -9,6 +9,6 @@ require "worked/cli"
 
 CONFIG = File.join(Dir.getwd, ".worked")
 
-File.open(CONFIG, "a") do |file|
-  Worked::CLI.execute(STDOUT, ARGV.join(" "), file)
+File.open(CONFIG, "a+") do |file|
+  Worked::CLI.execute(STDOUT, ARGV, file)
 end

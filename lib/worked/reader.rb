@@ -12,12 +12,20 @@ module Worked
     def week_of_year
       date.week_of_year
     end
+
+    def <=> other
+      self.date <=> other.date
+    end
   end
 
   class Reader
 
+    def self.by_week data
+      sort create_entries merge_by_week read_all_entries data
+    end
+
     def self.read data
-      create_entries merge_entries read_all_entries data
+      sort create_entries merge_by_day read_all_entries data
     end
 
     private
@@ -35,11 +43,19 @@ module Worked
       end
     end
 
+    def self.merge_by_week entries
+      merge_entries(entries) {|e| e.week_of_year}
+    end
+
+    def self.merge_by_day entries
+      merge_entries(entries) {|e| e.date}
+    end
+
     def self.merge_entries entries
       merged = Hash.new(0)
 
       entries.each do |entry|
-        merged[entry.date] += entry.hours
+        merged[yield(entry)] += entry.hours
       end
 
       merged
@@ -49,6 +65,10 @@ module Worked
       entries.collect do |date, hours|
         Entry.new(hours, date)
       end
+    end
+
+    def self.sort entries
+      entries.sort
     end
   end
 end

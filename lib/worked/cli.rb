@@ -1,37 +1,54 @@
 require 'optparse'
 require 'worked/recorder'
+require 'worked/graph'
 
 module Worked
   class CLI
     def self.execute(stdout, arguments, file)
 
-      Recorder.new(file).record(arguments)
+      begin
+        Recorder.new(file).record(arguments.join(" "))
+      rescue Exception => e
+        options(stdout, arguments, file) 
+      end
+    end
 
-      #options = {
-      #  :path     => '~'
-      #}
+    def self.options(stdout, arguments, file)
 
-      #parser = OptionParser.new do |opts|
-      #  opts.banner = <<-BANNER.gsub(/^          /,'')
-      #    This application is wonderful because...
+      options = show_options(stdout, arguments, file)
 
-      #    Usage: #{File.basename($0)} [options]
+      graph_path = options[:graph_path]
 
-      #    Options are:
-      #  BANNER
-      #  opts.separator ""
-      #  opts.on("-p", "--path=PATH", String,
-      #          "This is a sample message.",
-      #          "For multiple lines, add more strings.",
-      #          "Default: ~") { |arg| options[:path] = arg }
-      #  opts.on("-h", "--help",
-      #          "Show this help message.") { stdout.puts opts; exit }
+      Graph::create_weekly(Reader::by_week(file.readlines), graph_path)
 
-      #  opts.parse!(arguments)
-      #end
+      stdout.puts "Graph saved to #{graph_path}."
+    end
 
-      #path = options[:path]
+    def self.show_options(stdout, arguments, file)
 
+      options = {}
+
+      parser = OptionParser.new do |opts|
+        opts.banner = <<-BANNER.gsub(/^          /,'')
+          This application is wonderful!
+
+          Usage: #{File.basename($0)} [options]
+                 #{File.basename($0)} work time specification
+
+          Options are:
+        BANNER
+        opts.separator ""
+        opts.on("-g", "--graph=PATH", String,
+                "Prints a graph to the specified file.") { |arg| 
+                  options[:graph_path] = arg 
+                }
+        opts.on("-h", "--help",
+                "Show this help message.") { stdout.puts opts; exit }
+
+        opts.parse!(arguments)
+      end
+
+      options
     end
   end
 end

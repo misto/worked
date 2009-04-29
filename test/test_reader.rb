@@ -34,8 +34,8 @@ class TestReader < Test::Unit::TestCase
 
     recorded = Worked::Reader.read(data)
 
-    assert_equal 3/2, recorded[1].hours
-    assert_equal 13/2, recorded[0].hours
+    assert_equal 3/2, recorded[0].hours
+    assert_equal 13/2, recorded[1].hours
   end
 
   def test_multiple_weeks
@@ -69,5 +69,33 @@ class TestReader < Test::Unit::TestCase
     recorded = Worked::Reader.read(data)
 
     assert_equal 3, recorded[0].hours
+  end
+
+  def test_multiple_weeks
+    data = <<-EOS
+2009-04-21T21:00:00+00:00       2009-04-21T22:30:00+00:00       fixed bugs
+2009-06-21T21:00:00+00:00       2009-06-21T22:30:00+00:00       fixed bugs
+2009-05-24T17:00:00+00:00       2009-05-24T23:30:00+00:00       fixed bugs
+    EOS
+
+    recorded = Worked::Reader.read(data)
+
+    assert_equal 17, recorded[0].week_of_year
+    assert_equal 22, recorded[1].week_of_year
+    assert_equal 26, recorded[2].week_of_year
+  end
+
+  def test_merge_by_week
+    data = <<-EOS
+2009-04-21T21:00:00+00:00       2009-04-21T22:00:00+00:00       fixed bugs
+2009-04-22T21:00:00+00:00       2009-04-22T22:00:00+00:00       fixed bugs
+2009-05-23T21:00:00+00:00       2009-05-23T22:00:00+00:00       fixed bugs
+2009-05-23T21:00:00+00:00       2009-05-23T22:00:00+00:00       fixed bugs
+    EOS
+
+    recorded = Worked::Reader.by_week(data)
+
+    assert_equal 2, recorded[0].hours
+    assert_equal 2, recorded[1].hours
   end
 end
