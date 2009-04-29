@@ -19,7 +19,7 @@ class TestWorkedCli < Test::Unit::TestCase
   end
 
   def run_with argument
-    Worked::CLI.execute(@stdout_io, argument, @file)
+    Worked::CLI.execute(@stdout_io, [argument], @file)
     @file.flush
   end
 

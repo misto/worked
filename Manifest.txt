@@ -7,8 +7,10 @@ bin/worked
 config/website.yml
 lib/worked.rb
 lib/worked/cli.rb
+lib/worked/graph.rb
 lib/worked/inputgrammar.treetop
 lib/worked/inputparser.rb
+lib/worked/reader.rb
 lib/worked/recorder.rb
 script/console
 script/destroy
@@ -17,6 +19,7 @@ script/txt2html
 tasks/website.rake
 test/test_grammar.rb
 test/test_helper.rb
+test/test_reader.rb
 test/test_worked.rb
 test/test_worked_cli.rb
 website/javascripts/rounded_corners_lite.inc.js

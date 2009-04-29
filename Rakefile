@@ -9,6 +9,7 @@ $hoe = Hoe.new('worked', Worked::VERSION) do |p|
   p.rubyforge_name       = p.name
   p.extra_deps         = [
     ['treetop','>= 1.2.4'],
+    ['gruff','>= 0.3.1'],
   ]
   p.extra_dev_deps = [
     ['newgem', ">= #{::Newgem::VERSION}"]
