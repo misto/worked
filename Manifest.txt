@@ -8,6 +8,7 @@ config/website.yml
 lib/worked.rb
 lib/worked/cli.rb
 lib/worked/graph.rb
+lib/worked/inputgrammar.rb
 lib/worked/inputgrammar.treetop
 lib/worked/inputparser.rb
 lib/worked/reader.rb
@@ -16,6 +17,7 @@ script/console
 script/destroy
 script/generate
 script/txt2html
+tasks/parser_generate.rake
 tasks/website.rake
 test/test_grammar.rb
 test/test_helper.rb
