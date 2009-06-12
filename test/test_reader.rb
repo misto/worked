@@ -46,8 +46,8 @@ class TestReader < Test::Unit::TestCase
 
     recorded = Worked::Reader.read(data)
 
-    assert_equal 17, recorded[1].week_of_year
-    assert_equal 22, recorded[0].week_of_year
+    assert_equal 17, recorded[0].week_of_year
+    assert_equal 22, recorded[1].week_of_year
   end
 
   def test_januar_first
@@ -71,7 +71,7 @@ class TestReader < Test::Unit::TestCase
     assert_equal 3, recorded[0].hours
   end
 
-  def test_multiple_weeks
+  def test_multiple_weeks_2
     data = <<-EOS
 2009-04-21T21:00:00+00:00       2009-04-21T22:30:00+00:00       fixed bugs
 2009-06-21T21:00:00+00:00       2009-06-21T22:30:00+00:00       fixed bugs
