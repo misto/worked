@@ -21,10 +21,11 @@ module Worked
 
       g = Gruff::Bar.new
       g.title = "My Work Hours"
-      g.hide_legend = true
       g.y_axis_increment = 2
+      g.y_axis_label = "Hours"
+      g.x_axis_label = "Week of the Year"
 
-      g.data("Mirko", entries.collect {|e| e.hours.to_f})
+      g.data("Total: #{entries.sum{|e| e.hours.to_f}.to_i.to_s} Hours", entries.collect {|e| e.hours.to_f})
 
       g.minimum_value = 0
 
