@@ -19,6 +19,12 @@ class Treetop::Runtime::SyntaxNode
   end
 end
 
+class InputGrammarParser
+  def initialize
+    @root = nil
+  end
+end
+
 class InputParser
 
   def self.parse(source, now = DateTime.now)
