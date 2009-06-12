@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), "test_helper.rb")
 require 'tempfile'
+require 'fileutils'
 require 'enumerator'
 require 'active_support'
 require 'worked/cli'
@@ -14,12 +15,16 @@ class TestWorkedCli < Test::Unit::TestCase
     reset_stdout
   end
 
+  def teardown
+    @file.unlink
+  end
+
   def reset_stdout
     @stdout_io = StringIO.new
   end
 
   def run_with argument
-    Worked::CLI.execute(@stdout_io, [argument], @file)
+    Worked::CLI.execute(@stdout_io, argument.split, @file)
     @file.flush
   end
 
@@ -27,6 +32,20 @@ class TestWorkedCli < Test::Unit::TestCase
     File.open(file).enum_for(:each_line).collect do |line|
       extract_tuple line.strip
     end
+  end
+
+  def stdio
+    @stdout_io.string
+  end
+
+  def test_graph
+    graph_file = Tempfile.new("graph").path + ".png"
+
+    run_with " -g #{graph_file}"
+
+    assert_equal "Graph saved to #{graph_file}.\n", stdio
+
+    FileUtils::remove graph_file
   end
 
   def test_with_new_file
@@ -42,7 +61,7 @@ class TestWorkedCli < Test::Unit::TestCase
     assert "coding",                        first[1]
     assert "documentation and refactoring", second[1]
 
-    assert_equal "", @stdout_io.read
+    assert_equal "", stdio
 
     reset_stdout
 
@@ -54,6 +73,6 @@ class TestWorkedCli < Test::Unit::TestCase
     assert 1.hours,       third[0]
     assert "refactoring", third[1]
 
-    assert_equal "", @stdout_io.read
+    assert_equal "", stdio
   end
 end

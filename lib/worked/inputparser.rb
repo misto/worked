@@ -25,6 +25,8 @@ class InputGrammarParser
   end
 end
 
+class CannotParse < Exception ; end
+
 class InputParser
 
   def self.parse(source, now = DateTime.now)
@@ -47,6 +49,9 @@ class InputParser
 
   def self.parse_input source
     root = InputGrammarParser.new.parse(source)
+
+    raise CannotParse unless root
+
     [root.time.from, root.time.to, root.time.total, root.activity.text_value]
   end
 

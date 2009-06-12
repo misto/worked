@@ -6,25 +6,39 @@ module Worked
   class CLI
     def self.execute(stdout, arguments, file)
 
+      if arguments.empty?
+        parse_options(stdout, ["--help"], file)
+      end
+
       begin
-        Recorder.new(file).record(arguments.join(" "))
-      rescue Exception => e
-        options(stdout, arguments, file) 
+
+	      try_to_parse(file, arguments.join(" "))
+
+      rescue CannotParse
+
+	      options = parse_options(stdout, arguments, file)
+
+	      if options[:graph_path]
+
+	        graph(stdout, file, options[:graph_path])
+
+	      end
       end
     end
 
-    def self.options(stdout, arguments, file)
+    def self.try_to_parse file, string
 
-      options = show_options(stdout, arguments, file)
-
-      graph_path = options[:graph_path]
-
-      Graph::create_weekly(Reader::by_week(file.readlines), graph_path)
-
-      stdout.puts "Graph saved to #{graph_path}."
+      Recorder.new(file).record(string)
     end
 
-    def self.show_options(stdout, arguments, file)
+    def self.graph stdout, file, path
+
+      Graph::create_weekly(Reader::by_week(file.readlines), path)
+
+      stdout.puts "Graph saved to #{path}."
+    end
+
+    def self.parse_options(stdout, arguments, file)
 
       options = {}
 
@@ -39,8 +53,8 @@ module Worked
         BANNER
         opts.separator ""
         opts.on("-g", "--graph=PATH", String,
-                "Prints a graph to the specified file.") { |arg| 
-                  options[:graph_path] = arg 
+                "Prints a graph to the specified file.") { |arg|
+                  options[:graph_path] = arg
                 }
         opts.on("-h", "--help",
                 "Show this help message.") { stdout.puts opts; exit }
