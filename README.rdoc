@@ -19,6 +19,7 @@ Right now, the times are just recorded, no report generation yet.
 == FEATURES:
 
 * Appends a time range and an activity to a file.
+* Create a graph from the collected data, showing hours/week.
 
 == SYNOPSIS:
 
@@ -56,6 +57,9 @@ write:
 
 Specifying dates is not supported right now, but you can of course edit the file
 directly if necessary.
+
+Since version 0.2, worked also has the ability to generate a graph from the
+collected data, using the -g argument. [TODO: Add image here.]
 
 == STORY:
 
