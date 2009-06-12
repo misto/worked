@@ -1,8 +1,8 @@
 = Worked
 
-The easiest time recording application imagineable.
-
 * http://worked.rubyforge.org/
+
+The easiest time recording application imagineable.
 
 == DESCRIPTION:
 
