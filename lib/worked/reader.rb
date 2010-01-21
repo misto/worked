@@ -21,11 +21,11 @@ module Worked
   class Reader
 
     def self.by_week data
-      sort create_entries merge_by_week read_all_entries data
+      create_entries merge_by_week read_all_entries data
     end
 
     def self.read data
-      sort create_entries merge_by_day read_all_entries data
+      create_entries merge_by_day read_all_entries data
     end
 
     private
@@ -52,7 +52,7 @@ module Worked
     end
 
     def self.merge_entries entries
-      merged = Hash.new(0)
+      merged = ActiveSupport::OrderedHash.new(0)
 
       entries.each do |entry|
         merged[yield(entry)] += entry.hours
@@ -65,10 +65,6 @@ module Worked
       entries.collect do |date, hours|
         Entry.new(hours, date)
       end
-    end
-
-    def self.sort entries
-      entries.sort
     end
   end
 end
